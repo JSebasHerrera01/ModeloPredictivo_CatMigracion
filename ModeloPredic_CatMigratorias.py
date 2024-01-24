@@ -22,11 +22,11 @@ conn = st.connection('s3', type=FilesConnection)
 turismo_data = conn.read("streamlitbuckett/data_1.csv", input_format="csv", ttl=600, encoding=None, lineterminator='\n')
 
 # Verificar si turismo_data ya es de tipo bytes
-if isinstance(turismo_data, str):
+if isinstance(turismo_data, bytes):
+    turismo_bytes = turismo_data
+else:
     # Convertir a bytes si es una cadena
     turismo_bytes = turismo_data.encode('utf-8')
-else:
-    turismo_bytes = turismo_data
 
 # Detectar la codificación del archivo
 result = chardet.detect(turismo_bytes)
@@ -39,6 +39,18 @@ turismo_io = io.StringIO(turismo_bytes.decode(encoding))
 
 # Leer el DataFrame desde el objeto StringIO
 turismo_df = pd.read_csv(turismo_io)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # Filtrar los datos para  "Entradas"

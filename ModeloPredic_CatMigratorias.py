@@ -19,14 +19,16 @@ st.markdown("<h1 style='text-align: center;'>Análisis Predictivo de Categorias 
 # Crear conexión a S3
 conn = st.connection('s3', type=FilesConnection)
 # Descargar archivo CSV desde S3
-turismo_data = conn.read("streamlitbuckett/data_1.csv", input_format="csv", ttl=600, encoding=None, lineterminator='\n')
+turismo_df = conn.read("streamlitbuckett/data_1.csv", input_format="csv", ttl=600, encoding=None, lineterminator='\n')
 
-# Verificar si turismo_data ya es de tipo bytes
-if isinstance(turismo_data, bytes):
-    turismo_bytes = turismo_data
-else:
-    # Convertir a bytes si es una cadena
-    turismo_bytes = turismo_data.encode('utf-8')
+# Utilizar un objeto StringIO para que Pandas pueda escribir en memoria
+turismo_buffer = io.StringIO()
+
+# Escribir el DataFrame en el búfer
+turismo_df.to_csv(turismo_buffer, index=False, encoding='utf-8')
+
+# Obtener los bytes del búfer
+turismo_bytes = turismo_buffer.getvalue().encode('utf-8')
 
 # Detectar la codificación del archivo
 result = chardet.detect(turismo_bytes)

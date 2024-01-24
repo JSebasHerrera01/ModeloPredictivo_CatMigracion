@@ -11,7 +11,6 @@ import matplotlib.pyplot as plt
 import boto3
 from matplotlib.ticker import MaxNLocator
 import io
-import chardet
 
 # Centrar el título con Markdown y Streamlit
 st.markdown("<h1 style='text-align: center;'>Análisis Predictivo de Categorias Migratorias en Colombia</h1>", unsafe_allow_html=True)
@@ -21,38 +20,14 @@ conn = st.connection('s3', type=FilesConnection)
 # Descargar archivo CSV desde S3
 turismo_df = conn.read("streamlitbuckett/data_1.csv", input_format="csv", ttl=600, encoding=None, lineterminator='\n')
 
-# Utilizar un objeto StringIO para que Pandas pueda escribir en memoria
-turismo_buffer = io.StringIO()
+# Convertir el DataFrame a bytes directamente
+turismo_bytes = turismo_df.to_csv(index=False, encoding='utf-8').encode('utf-8')
 
-# Escribir el DataFrame en el búfer
-turismo_df.to_csv(turismo_buffer, index=False, encoding='utf-8')
-
-# Obtener los bytes del búfer
-turismo_bytes = turismo_buffer.getvalue().encode('utf-8')
-
-# Detectar la codificación del archivo
-result = chardet.detect(turismo_bytes)
-encoding = result['encoding']
-
-print(f"La codificación detectada es: {encoding}")
-
-# Utilizar un objeto StringIO para que Pandas pueda leer desde una cadena
-turismo_io = io.StringIO(turismo_bytes.decode(encoding))
+# Utilizar un objeto StringIO para leer el DataFrame desde bytes
+turismo_io = io.StringIO(turismo_bytes.decode('utf-8'))
 
 # Leer el DataFrame desde el objeto StringIO
 turismo_df = pd.read_csv(turismo_io)
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # Filtrar los datos para  "Entradas"

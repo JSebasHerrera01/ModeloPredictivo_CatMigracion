@@ -20,11 +20,6 @@ conn = st.connection('s3', type=FilesConnection)
 # Descargar archivo CSV desde S3
 turismo_data = conn.read("streamlitbuckett/data.csv", input_format="csv", ttl=600, encoding='utf-8', lineterminator='\n')
 
-# Utilizar un objeto StringIO para que Pandas pueda leer desde una cadena
-turismo_io = io.StringIO(turismo_data)
-
-# Leer el DataFrame desde el objeto StringIO
-turismo_df = pd.read_csv(turismo_io)
 
 
 

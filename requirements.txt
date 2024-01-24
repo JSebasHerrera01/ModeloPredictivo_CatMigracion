@@ -4,7 +4,6 @@ numpy
 scikit-learn
 xgboost 
 matplotlib
-BytesIO
 boto3
 s3fs==2023.12.2
 st-files-connection

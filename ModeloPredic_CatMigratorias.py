@@ -13,14 +13,12 @@ from io import BytesIO
 from matplotlib.ticker import MaxNLocator
 
 # Centrar el título con Markdown y Streamlit
-st.markdown("<h1 style='text-align: center;'>Análisis Pr Migratorias en Colombia</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'>Análisis Predictivo de Categorias Migratorias en Colombia</h1>", unsafe_allow_html=True)
 
 # Crear conexión a S3
 conn = st.connection('s3', type=FilesConnection)
 # Descargar archivo CSV desde S3
-turismo_df = conn.read("streamlitbuckett/data.csv", input_format="csv", ttl=600, encoding='latin1', lineterminator='\n')
-
-
+turismo_df = conn.read("streamlitbuckett/data_1.csv", input_format="csv", ttl=600, encoding='latin1', lineterminator='\n').encode('utf-8').decode('utf-8-sig')
 
 # Filtrar los datos para el motivo de viaje "Turismo" y "Entradas"
 turismo_df = turismo_df[(turismo_df['Entrada'] == 'Entradas')]

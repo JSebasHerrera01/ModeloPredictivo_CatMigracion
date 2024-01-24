@@ -18,8 +18,16 @@ st.markdown("<h1 style='text-align: center;'>Análisis Predictivo de Categorias 
 # Crear conexión a S3
 conn = st.connection('s3', type=FilesConnection)
 # Descargar archivo CSV desde S3
-turismo_df = conn.read("streamlitbuckett/data_1.csv", input_format="csv", ttl=600, encoding='latin1', lineterminator='\n').encode('utf-8').decode('utf-8-sig')
+turismo_data = conn.read("streamlitbuckett/data_1.csv", input_format="csv", ttl=600, encoding='latin1', lineterminator='\n')
 
+# Decodificar el contenido del archivo CSV desde 'latin1' a 'utf-8'
+turismo_data = turismo_data.encode('latin1').decode('utf-8-sig')
+
+# Crear un objeto StringIO para que Pandas pueda leer desde una cadena
+turismo_io = io.StringIO(turismo_data)
+
+# Leer el DataFrame desde el objeto StringIO
+turismo_df = pd.read_csv(turismo_io)
 # Filtrar los datos para el motivo de viaje "Turismo" y "Entradas"
 turismo_df = turismo_df[(turismo_df['Entrada'] == 'Entradas')]
 

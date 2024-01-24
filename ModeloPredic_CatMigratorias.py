@@ -9,8 +9,9 @@ import xgboost as xgb
 from sklearn.metrics import mean_squared_error, r2_score
 import matplotlib.pyplot as plt
 import boto3
-from io import BytesIO
 from matplotlib.ticker import MaxNLocator
+import io
+import chardet
 
 # Centrar el título con Markdown y Streamlit
 st.markdown("<h1 style='text-align: center;'>Análisis Predictivo de Categorias Migratorias en Colombia</h1>", unsafe_allow_html=True)
@@ -18,16 +19,13 @@ st.markdown("<h1 style='text-align: center;'>Análisis Predictivo de Categorias 
 # Crear conexión a S3
 conn = st.connection('s3', type=FilesConnection)
 # Descargar archivo CSV desde S3
-turismo_data = conn.read("streamlitbuckett/data.csv", input_format="csv", ttl=600, encoding='latin1', lineterminator='\n')
+turismo_data = conn.read("streamlitbuckett/data_1.csv", input_format="csv", ttl=600, encoding=None, lineterminator='\n')
 
-# Decodificar el contenido del archivo CSV desde 'latin1' a 'utf-8'
-turismo_data = turismo_data.encode('latin1').decode('utf-8-sig')
+# Detectar la codificación del archivo
+result = chardet.detect(turismo_data)
+encoding = result['encoding']
 
-# Crear un objeto StringIO para que Pandas pueda leer desde una cadena
-turismo_io = io.StringIO(turismo_data)
-
-# Leer el DataFrame desde el objeto StringIO
-turismo_df = pd.read_csv(turismo_io)
+print(f"La codificación detectada es: {encoding}")
 
 
 

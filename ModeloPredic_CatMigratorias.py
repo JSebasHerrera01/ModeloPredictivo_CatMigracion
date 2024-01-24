@@ -21,8 +21,12 @@ conn = st.connection('s3', type=FilesConnection)
 # Descargar archivo CSV desde S3
 turismo_data = conn.read("streamlitbuckett/data_1.csv", input_format="csv", ttl=600, encoding=None, lineterminator='\n')
 
-# Convertir a bytes
-turismo_bytes = turismo_data if isinstance(turismo_data, bytes) else turismo_data.encode('utf-8')
+# Verificar si turismo_data ya es de tipo bytes
+if isinstance(turismo_data, str):
+    # Convertir a bytes si es una cadena
+    turismo_bytes = turismo_data.encode('utf-8')
+else:
+    turismo_bytes = turismo_data
 
 # Detectar la codificación del archivo
 result = chardet.detect(turismo_bytes)
@@ -31,7 +35,7 @@ encoding = result['encoding']
 print(f"La codificación detectada es: {encoding}")
 
 # Utilizar un objeto StringIO para que Pandas pueda leer desde una cadena
-turismo_io = io.StringIO(turismo_data.decode(encoding))
+turismo_io = io.StringIO(turismo_bytes.decode(encoding))
 
 # Leer el DataFrame desde el objeto StringIO
 turismo_df = pd.read_csv(turismo_io)

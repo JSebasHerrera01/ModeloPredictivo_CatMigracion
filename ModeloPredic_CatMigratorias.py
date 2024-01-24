@@ -18,7 +18,7 @@ st.markdown("<h1 style='text-align: center;'>Análisis Predictivo de Categorias 
 # Crear conexión a S3
 conn = st.connection('s3', type=FilesConnection)
 # Descargar archivo CSV desde S3
-turismo_data = conn.read("streamlitbuckett/data.csv", input_format="csv", ttl=600, encoding='latin1', lineterminator='\n')
+turismo_data = conn.read("streamlitbuckett/data.csv", input_format="csv", ttl=600, encoding='latin1')
 
 
 

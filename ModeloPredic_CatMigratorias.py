@@ -13,7 +13,7 @@ from io import BytesIO
 from matplotlib.ticker import MaxNLocator
 
 # Centrar el título con Markdown y Streamlit
-st.markdown("<h1 style='text-align: center;'>Análisis Predictivo de Categorias Migratorias en Colombia</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'>Análisis Pr Migratorias en Colombia</h1>", unsafe_allow_html=True)
 
 # Crear conexión a S3
 conn = st.connection('s3', type=FilesConnection)

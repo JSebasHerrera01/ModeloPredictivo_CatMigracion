@@ -1,0 +1,10 @@
+streamlit
+pandas 
+numpy 
+sklearn
+xgboost 
+matplotlib
+io
+boto3
+s3fs==2023.12.2
+st-files-connection

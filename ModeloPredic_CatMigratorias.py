@@ -18,7 +18,7 @@ st.markdown("<h1 style='text-align: center;'>Análisis Predictivo de Categorias 
 # Crear conexión a S3
 conn = st.connection('s3', type=FilesConnection)
 # Descargar archivo CSV desde S3
-turismo_df = conn.read("streamlitbuckett/data.csv", input_format="csv", ttl=600, encoding='utf-8')
+turismo_df = conn.read("streamlitbuckett/data.csv", input_format="csv", ttl=600, encoding='latin-1')
 
 
 # Filtrar los datos para el motivo de viaje "Turismo" y "Entradas"

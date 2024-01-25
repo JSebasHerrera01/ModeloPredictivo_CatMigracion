@@ -3,8 +3,10 @@ pandas
 numpy 
 scikit-learn
 xgboost 
+libomp
 matplotlib
 boto3
 chardet
 s3fs==2023.12.2
 st-files-connection
+xgboost --no-binary xgboost -v

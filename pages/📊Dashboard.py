@@ -1,7 +1,8 @@
 import streamlit as st
 
 # Código Streamlit
-st.title("Visualización de Flujos Migratorios en Colombia (Entradas al pais)")
+
+st.markdown("<h1 style='text-align: center;'>Visualización de Flujos Migratorios en Colombia (Entradas al pais)</h1>", unsafe_allow_html=True)
 
 # Mostrar el Iframe
 iframe_code = """

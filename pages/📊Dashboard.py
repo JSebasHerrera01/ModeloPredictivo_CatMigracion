@@ -11,5 +11,6 @@ iframe_code = """
     frameborder="0" allowFullScreen="true"></iframe>
 </div>
 """
-# Mostrar el iframe en la aplicación
+
+# Mostrar el iframe centrado y ajustado en la aplicación
 st.markdown(iframe_code, unsafe_allow_html=True)

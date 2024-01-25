@@ -1,5 +1,7 @@
 import streamlit as st
 
+st.set_page_config(layout="wide")
+
 # Código Streamlit
 st.markdown("<h1 style='text-align: center;'>Visualización de Flujos Migratorios en Colombia (Entradas al pais)</h1>", unsafe_allow_html=True)
 
